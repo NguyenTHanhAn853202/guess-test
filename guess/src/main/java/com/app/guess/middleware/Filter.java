@@ -1,6 +1,7 @@
 package com.app.guess.middleware;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -10,6 +11,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 
+import com.app.guess.constant.NotAuthentication;
+import com.app.guess.constant.TokenName;
 import com.app.guess.service.imp.CustomUserDetailService;
 import com.app.guess.utils.CookieUtils;
 import com.app.guess.utils.JwtUtils;
@@ -40,10 +43,18 @@ public class Filter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         try {
-            String token = CookieUtils.getTokenFromCookie(request, ALREADY_FILTERED_SUFFIX);
+            String token = CookieUtils.getTokenFromCookie(request, TokenName.ACESS_TOKEN);
+
+            var path = request.getServletPath();
+
+            if (Arrays.stream(NotAuthentication.PATHS).anyMatch(match -> path.startsWith(match))) {
+                filterChain.doFilter(request, response);
+                return;
+            }
 
             if (token == null) {
                 filterChain.doFilter(request, response);
+                return;
             }
 
             jwtUtils.isAccessTokenValid(token);
@@ -54,7 +65,7 @@ public class Filter extends OncePerRequestFilter {
                 UserDetails user = userDetailService.loadUserByUsername(username);
 
                 UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user,
-                        null);
+                        null, user.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             }
 

@@ -1,5 +1,6 @@
 package com.app.guess.service.imp;
 
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -21,7 +22,7 @@ public class CustomUserDetailService implements UserDetailsService {
         UserDetailsDto user = userMapper.loadUserbyUsername(username);
 
         if (user == null)
-            throw new UsernameNotFoundException("");
+            throw new BadCredentialsException("Not found user");
 
         return CustomUserDetails.builder().userId(user.getUserId()).username(user.getUsername())
                 .password(user.getPassword()).build();

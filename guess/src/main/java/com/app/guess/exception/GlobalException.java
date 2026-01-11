@@ -3,6 +3,8 @@ package com.app.guess.exception;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -44,10 +46,21 @@ public class GlobalException {
         return errorResponse;
     }
 
+    @ExceptionHandler({ BadCredentialsException.class, InternalAuthenticationServiceException.class })
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleBadCredentialsException() {
+        ErrorResponse errorResponse = new ErrorResponse(ErrorCode.PASSWORD_OR_USERNAME_INVALID);
+        return errorResponse;
+    }
+
     @ExceptionHandler(RuntimeException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorResponse handleRuntimeException(RuntimeException ex) {
         ErrorResponse errorResponse = new ErrorResponse(ErrorCode.INTERNAL_ERROR);
+        System.out.println(ex.getMessage());
+        System.out.println(ex.getCause());
+        System.out.println(ex.getLocalizedMessage());
+        System.out.println(ex.getClass());
         return errorResponse;
     }
 }

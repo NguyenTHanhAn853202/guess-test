@@ -4,19 +4,57 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.app.guess.mapper.UserMapper">
-    <!-- Result mapper -->
-    <!-- UserDetailsDto -->
+  <!-- Result mapper -->
+  <!-- UserDetailsDto -->
   <resultMap id="UserDetailsDto" type="com.app.guess.dto.UserDetailsDto">
     <id column="user_id" jdbcType="VARCHAR" property="userId"/>
     <result column="username" jdbcType="VARCHAR" property="username"/>
     <result column="password" jdbcType="VARCHAR" property="password"/>
   </resultMap>
 
+  <resultMap id="SignIn" type="com.app.guess.dto.response.SignInResponse">
+    <id column="user_id" jdbcType="VARCHAR" property="userId"/>
+    <result column="username" jdbcType="VARCHAR" property="username"/>
+  </resultMap>
+
+  <resultMap id="Result" type="com.app.guess.dto.response.GuessResponse">
+    <result column="turns" jdbcType="INTEGER" property="turns"/>
+    <result column="score" jdbcType="INTEGER" property="score"/>
+  </resultMap>
+
+  <resultMap id="Leaderboard" type="com.app.guess.dto.response.LeaderboardResponse">
+    <id column="user_id" jdbcType="VARCHAR" property="userId"/>
+    <result column="username" jdbcType="VARCHAR" property="username"/>
+    <result column="score" jdbcType="INTEGER" property="score"/>
+  </resultMap>
+
   <!-- SQL -->
-   <!-- for user detail service -->
+  <!-- for user detail service -->
   <select id="loadUserbyUsername" resultMap="UserDetailsDto">
     select user_id, username, password  from users where username = #{username}
   </select>
 
+  <select id="existsUsername">
+    select exists (select 1 from users where username = #{username})
+  </select>
+
+  <!-- sign up -->
+  <insert id="signUp">
+    insert into users (user_id, username, password) values (#{userId}, #{username}, #{password})
+  </insert>
+
+  <!-- update score and turns -->
+  <update id="updateScoreAndTurns">
+    update users set score = score +  #{score}, turns = turns - #{turns} where user_id = #{userId}
+  </update>
+
+  <!-- get result -->
+  <select id="getResult" resultMap="Result">
+    select turns, score from users where user_id = #{userId}
+  </select>
+
+  <select id="getLeaderboard" resultMap="Leaderboard">
+    select user_id, username, score from users order by score DESC limit #{limit}
+  </select>
 
 </mapper>

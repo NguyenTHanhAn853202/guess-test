@@ -1,20 +1,28 @@
 spring:
-    application:
-        name: guess_system
-    datasource:
-        url: jdbc:mysql://localhost:3306/guess_db
-        username: root
-        password: root
-        driver-class-name: com.mysql.cj.jdbc.Driver
+  application:
+    name: guess_system
+  datasource:
+    url: jdbc:mysql://localhost:3306/guess_db
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
+
+server:
+  servlet:
+    context-path: "/api/v1"
 
 mybatis:
   mapper-locations: classpath*:mapper/*.xml
   type-aliases-package: com.app.guess.model
   configuration:
-        map-underscore-to-camel-case: true
+    map-underscore-to-camel-case: true
 
 jwt:
-    access-token-key: my-secret-key-my-secret-key-my-secret-key
-    refresh-token-key: my-refresh-secret-key-my-refresh-secret-key-my-refresh-secret-key
-    access-token-expiration: 90000 # 15 minutes
-    refresh-token-expiration: 604800000 # 7 days
+  access-token-key: my-secret-key-my-secret-key-my-secret-key
+  refresh-token-key: my-refresh-secret-key-my-refresh-secret-key-my-refresh-secret-key
+  access-token-expiration: 900000 # 15 minutes
+  refresh-token-expiration: 604800000 # 7 days

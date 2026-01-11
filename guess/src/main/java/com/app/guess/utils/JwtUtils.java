@@ -1,6 +1,5 @@
 package com.app.guess.utils;
 
-import java.security.Key;
 import java.util.Date;
 
 import javax.crypto.SecretKey;
@@ -14,9 +13,9 @@ import io.jsonwebtoken.security.Keys;
 
 @Component
 public class JwtUtils {
-    private final Key ACCESS_TOKEN_SECRET;
+    private final SecretKey ACCESS_TOKEN_SECRET;
 
-    private final Key REFRESH_TOKEN_SECRET;
+    private final SecretKey REFRESH_TOKEN_SECRET;
 
     private final long ACCESS_TOKEN_EXPIRATION_TIME;
 
@@ -57,7 +56,7 @@ public class JwtUtils {
         return isValidToken(token, REFRESH_TOKEN_SECRET);
     }
 
-    private boolean isValidToken(String token, Key key) {
+    private boolean isValidToken(String token, SecretKey key) {
         try {
             getClaims(token, key);
             return true;
@@ -66,15 +65,15 @@ public class JwtUtils {
         }
     }
 
-    private Claims getClaims(String token, Key key) {
-        return Jwts.parser().verifyWith((SecretKey) key).build().parseSignedClaims(token).getPayload();
+    private Claims getClaims(String token, SecretKey key) {
+        return Jwts.parser().verifyWith(key).build().parseSignedClaims(token).getPayload();
     }
 
-    private Key hashKey(String key) {
+    private SecretKey hashKey(String key) {
         return Keys.hmacShaKeyFor(key.getBytes());
     }
 
-    private String generateToken(String username, Key key, long EXPIRATION_TIME) {
+    private String generateToken(String username, SecretKey key, long EXPIRATION_TIME) {
         return Jwts.builder().subject(username).issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME)).signWith(key).compact();
     }
