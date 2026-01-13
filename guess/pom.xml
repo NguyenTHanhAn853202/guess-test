@@ -32,7 +32,7 @@
 		<mybatis.version>4.0.0</mybatis.version>
 		<lambok.version>1.18.42</lambok.version>
 		<spring-web.version>7.0.2</spring-web.version>
-		<mysql.version>9.5.0</mysql.version>
+		<mysql.version>9.4.0</mysql.version>
 		<spring-web-start.version>4.0.1</spring-web-start.version>
 		<jjwt.version>0.13.0</jjwt.version>
 		<validation.version>4.0.1</validation.version>

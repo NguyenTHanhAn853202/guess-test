@@ -22,4 +22,6 @@ public interface UserMapper {
 
     List<LeaderboardResponse> getLeaderboard(@Param("limit") int limit);
 
+    int payment(@Param("userId") String userId);
+
 }

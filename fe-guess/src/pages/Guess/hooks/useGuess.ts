@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 import { useGuessForm } from "./useGuessForm";
-import { usePostGuess } from "../../../app/stores/api";
+import { usePostGuess, usePostPrepayment } from "../../../app/stores/api";
 import type { Error } from "../../../types";
 import { ERROR_CODE } from "../../../constants";
 import { errorMapper } from "../../../utils";
@@ -22,12 +22,14 @@ export const useGuess = () => {
 
   const [response, setResponse] = useState<Response>();
 
-  const { mutateAsync } = usePostGuess();
+  const { mutateAsync: mutationGuess } = usePostGuess();
+
+  const { mutateAsync: mutationPrepayment, isPending } = usePostPrepayment();
 
   const handleSubmitForm = handleSubmit(
     useCallback(
       async ({ number }) => {
-        await mutateAsync(
+        await mutationGuess(
           { number },
           {
             onSuccess: ({ data }) => {
@@ -45,9 +47,21 @@ export const useGuess = () => {
           }
         );
       },
-      [mutateAsync, setError]
+      [mutationGuess, setError]
     )
   );
+
+  const handleClickPlusTurn = useCallback(() => {
+    mutationPrepayment(undefined, {
+      onSuccess: ({ data }) => {
+        const url = data?.data?.paymentUrl;
+        if (url) window.location.href = url;
+      },
+      onError: () => {
+        alert("Fail request");
+      },
+    });
+  }, [mutationPrepayment]);
 
   return {
     control,
@@ -55,5 +69,7 @@ export const useGuess = () => {
     isSubmitting,
     isValid,
     handleSubmitForm,
+    handleClickPlusTurn,
+    isFetchPrepayment: isPending,
   };
 };

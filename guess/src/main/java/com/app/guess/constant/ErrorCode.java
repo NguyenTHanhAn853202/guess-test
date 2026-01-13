@@ -13,6 +13,9 @@ public enum ErrorCode {
     PASSWORD_OR_USERNAME_INVALID("BN002", "Invalid username or password"),
     TURNS_LESS_THAN_ONE("BN003", "No remaining turns"),
 
+    // Payment
+    MIN_MONEY_PAYMENT("PM001", "The min payment is 5000 VND"),
+
     // Normal Status
     SUCCESS("NM001", "The request is successful"),
     BAD_REQUEST("NM002", "Bad request"),

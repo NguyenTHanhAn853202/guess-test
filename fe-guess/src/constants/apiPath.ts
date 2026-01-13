@@ -4,7 +4,9 @@ const ApiPath = {
     REFRESH_TOKEN: '/auth/refresh-token',
     LOGOUT:'/user/logout',
     ME:'/user/me',
-    LEADERBOARD:'/leaderboard'
+    LEADERBOARD:'/leaderboard',
+    GUESS:"/guess",
+    PREPAYMENT:"/payment/prepayment"
 }
 
 export { ApiPath };

@@ -10,6 +10,9 @@ spring:
     redis:
       host: 127.0.0.1
       port: 6379
+  sql:
+    init:
+      mode: always
 
 server:
   servlet:
@@ -26,3 +29,9 @@ jwt:
   refresh-token-key: my-refresh-secret-key-my-refresh-secret-key-my-refresh-secret-key
   access-token-expiration: 900000 # 15 minutes
   refresh-token-expiration: 604800000 # 7 days
+
+vnpay:
+  tmnCode: DP6IMC13
+  hashSecret: 4HKNWC3BSC8EXGYXQ6I2NF63LSLDT5FL
+  payUrl: https://sandbox.vnpayment.vn/paymentv2/vpcpay.html
+  returnUrl: http://localhost:8080/api/v1/payment/result

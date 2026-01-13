@@ -13,7 +13,7 @@ const ProfilePage = () => {
         </Typography>
         <Typography variant="h6">Username: {data?.username}</Typography>
         <Typography variant="h6">turns: {data?.turns}</Typography>
-        <Typography variant="h6">score: {data?.turns}</Typography>
+        <Typography variant="h6">score: {data?.score}</Typography>
       </div>
     </div>
   );

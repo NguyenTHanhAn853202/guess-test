@@ -36,7 +36,8 @@ public class Security {
         http.cors(cors -> cors.configurationSource(corsConfigurationSource())).csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(
-                        request -> request.requestMatchers("/auth/**").permitAll().anyRequest().authenticated())
+                        request -> request.requestMatchers("/auth/**", "/payment/result").permitAll().anyRequest()
+                                .authenticated())
                 .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }

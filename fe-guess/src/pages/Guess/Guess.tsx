@@ -4,7 +4,15 @@ import { Input } from "../../components/Input/Input";
 import { useGuess } from "./hooks/useGuess";
 
 const GuessPage = () => {
-  const { control, handleSubmitForm, isSubmitting, response,isValid } = useGuess();
+  const {
+    control,
+    handleSubmitForm,
+    isSubmitting,
+    response,
+    isValid,
+    handleClickPlusTurn,
+    isFetchPrepayment
+  } = useGuess();
   return (
     <div className="flex justify-center pt-50  h-full">
       <div className="w-100 gap-4 flex flex-col">
@@ -14,10 +22,23 @@ const GuessPage = () => {
         <form onSubmit={handleSubmitForm} className="flex flex-col gap-3">
           <Input control={control} name="number" label="Number" type="number" />
 
-          <Button type="submit" variant="contained" disabled={isSubmitting || !isValid}>
+          <Button
+            type="submit"
+            variant="contained"
+            disabled={isSubmitting || !isValid}
+          >
             Submit
           </Button>
         </form>
+
+        <Button
+          onClick={handleClickPlusTurn}
+          type="button"
+          variant="contained"
+          disabled={isFetchPrepayment}
+        >
+          Plus turns
+        </Button>
 
         {response && (
           <div className="flex flex-col items-center">

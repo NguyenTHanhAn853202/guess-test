@@ -54,7 +54,11 @@
   </select>
 
   <select id="getLeaderboard" resultMap="Leaderboard">
-    select user_id, username, score from users order by score DESC limit #{limit}
+    select user_id, username, score from users where score &gt; 0 order by score DESC limit #{limit}
   </select>
+
+  <update id="payment">
+    update users set turns = turns +5 where user_id = #{userId}
+  </update>
 
 </mapper>
