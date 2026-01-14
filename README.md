@@ -4,7 +4,7 @@
 Ứng dụng Game đoán số cho phép người dùng đăng ký, đăng nhập và tham gia đoán số.
 Hệ thống có leaderboard, quản lý phiên đăng nhập bằng JWT, tối ưu hiệu năng bằng Redis, và được dockerized toàn bộ.
 
-## Tanstack
+## Techstack
 * Frontend:ReactJs, Tanstack Query, Tanstack Router, Zustand, Axios
 * Backend: Java spring boot, jwt, validation, mybatis, redus
 * Database: MySQL
