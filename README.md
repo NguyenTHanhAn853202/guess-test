@@ -6,7 +6,7 @@ Hệ thống có leaderboard, quản lý phiên đăng nhập bằng JWT, tối 
 
 ## Techstack
 * Frontend:ReactJs, Tanstack Query, Tanstack Router, Zustand, Axios
-* Backend: Java spring boot, jwt, validation, mybatis, redus
+* Backend: Java spring boot, jwt, validation, mybatis, redis
 * Database: MySQL
 * Tools: Docker, docker componse
 
