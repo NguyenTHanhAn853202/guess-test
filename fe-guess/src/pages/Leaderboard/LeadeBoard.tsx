@@ -14,14 +14,18 @@ const LeaderboardPage = () => {
       </Typography>
 
       <List>
-        {response?.map((item) => (
-          <ListItem>
-            <ListItemText
-              primary={`Username: ${item.value}`}
-              secondary={`Score: ${item.score}`}
-            />
-          </ListItem>
-        ))}
+        {!response?.length ? (
+          <p>No data</p>
+        ) : (
+          response?.map((item) => (
+            <ListItem>
+              <ListItemText
+                primary={`Username: ${item.value}`}
+                secondary={`Score: ${item.score}`}
+              />
+            </ListItem>
+          ))
+        )}
       </List>
     </div>
   );

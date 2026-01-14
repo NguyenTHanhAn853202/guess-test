@@ -1,10 +1,10 @@
 import axios from "axios";
 import type { Error } from "../types";
-import { SCREEN } from "../constants";
+import { ApiPath, SCREEN } from "../constants";
 import { postRefreshToken } from "../app/services";
 
 const baseApi = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: ApiPath.ROOT,
   headers: {
     "Content-Type": "application/json",
   },

@@ -1,0 +1,44 @@
+version: "3.9"
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: root
+    volumes:
+      - mysql_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+
+  redis:
+    image: redis:7-alpine
+    container_name: redis
+    ports:
+      - "6379:6379"
+
+  backend:
+    build: ./guess
+    container_name: guess-be
+    env_file:
+      - .env
+    restart: always
+    depends_on:
+      - mysql
+      - redis
+    ports:
+      - "8080:8080"
+
+  frontend:
+    build: ./fe-guess
+    container_name: guess-fe
+    depends_on:
+      - backend
+    ports:
+      - "4173:4173"
+    environment:
+      VITE_API_URL: ${VITE_API_URL}
+
+volumes:
+  mysql_data:

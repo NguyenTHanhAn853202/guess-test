@@ -39,7 +39,7 @@ public class PaymentController {
                     <head><title>Payment</title></head>
                     <body>
                         <h1>Status: %s</h1>
-                        <a href='http://localhost:5173/'>Go back</a>
+                        <a href='http://localhost:4173/'>Go back</a>
                     </body>
                     </html>
                 """.formatted(responses);

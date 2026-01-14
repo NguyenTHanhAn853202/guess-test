@@ -1,22 +1,19 @@
 spring:
   application:
-    name: guess_system
+    name: ${SPRING_APPLICATION_NAME}
   datasource:
-    url: jdbc:mysql://localhost:3306/guess_db
-    username: root
-    password: root
+    url: jdbc:mysql://${DB_HOST}:${DB_PORT}/${DB_NAME}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
   data:
     redis:
-      host: 127.0.0.1
-      port: 6379
-  sql:
-    init:
-      mode: always
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
 
 server:
   servlet:
-    context-path: "/api/v1"
+    context-path: ${SERVER_CONTEXT_PATH}
 
 mybatis:
   mapper-locations: classpath*:mapper/*.xml
@@ -25,13 +22,13 @@ mybatis:
     map-underscore-to-camel-case: true
 
 jwt:
-  access-token-key: my-secret-key-my-secret-key-my-secret-key
-  refresh-token-key: my-refresh-secret-key-my-refresh-secret-key-my-refresh-secret-key
-  access-token-expiration: 900000 # 15 minutes
-  refresh-token-expiration: 604800000 # 7 days
+  access-token-key: ${JWT_ACCESS_TOKEN_KEY}
+  refresh-token-key: ${JWT_REFRESH_TOKEN_KEY}
+  access-token-expiration: ${JWT_ACCESS_TOKEN_EXPIRATION}
+  refresh-token-expiration: ${JWT_REFRESH_TOKEN_EXPIRATION}
 
 vnpay:
-  tmnCode: DP6IMC13
-  hashSecret: 4HKNWC3BSC8EXGYXQ6I2NF63LSLDT5FL
-  payUrl: https://sandbox.vnpayment.vn/paymentv2/vpcpay.html
-  returnUrl: http://localhost:8080/api/v1/payment/result
+  tmnCode: ${VNPAY_TMN_CODE}
+  hashSecret: ${VNPAY_HASH_SECRET}
+  payUrl: ${VNPAY_PAY_URL}
+  returnUrl: ${VNPAY_RETURN_URL}
