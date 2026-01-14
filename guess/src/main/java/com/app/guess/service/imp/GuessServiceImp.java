@@ -41,6 +41,8 @@ public class GuessServiceImp implements GuessService {
         if (request.getNumber() == randomNumber) {
             user.setScore(1);
             response.setScore(response.getScore() + 1);
+            redisTemplate.opsForZSet()
+                    .add(RedisKey.LEADERBOARD, UserInfo.getCurrentUserName(), response.getScore());
 
         }
 
@@ -48,9 +50,6 @@ public class GuessServiceImp implements GuessService {
         if (update < 1) {
             throw new AppException(ErrorCode.BAD_REQUEST);
         }
-
-        redisTemplate.opsForZSet()
-                .add(RedisKey.LEADERBOARD, UserInfo.getCurrentUserName(), response.getScore());
 
         response.setCorrectNumber(randomNumber);
         response.setCorrect(request.getNumber() == randomNumber);

@@ -37,8 +37,6 @@ services:
       - backend
     ports:
       - "4173:4173"
-    environment:
-      VITE_API_URL: ${VITE_API_URL}
 
 volumes:
   mysql_data:

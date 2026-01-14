@@ -10,6 +10,15 @@ Hệ thống có leaderboard, quản lý phiên đăng nhập bằng JWT, tối 
 * Database: MySQL
 * Tools: Docker, docker componse
 
+## Payment(VNPAY)
+```
+Ngân hàng: NCB
+Số thẻ: 9704198526191432198
+Tên chủ thẻ:NGUYEN VAN A
+Ngày phát hành:07/15
+Mật khẩu OTP:123456
+```
+
 ## Xử lý bài toán
 1. Một user gọi nhiều lần /guess cùng 1 lúc:
 * Dùng @Transactional để block record khi update
@@ -57,7 +66,7 @@ docker compose up --build
 
 // new tab
 docker exec -it mysql mysql -u root -p
-/// Nhập password
+/// Nhập password: root
 CREATE DATABASE IF NOT EXISTS guess_db;
 USE guess_db;
 CREATE TABLE users (
@@ -76,9 +85,15 @@ CREATE INDEX idx_username ON users (username);
 
 exit
 
-docker restart guess-be
 // Truy cập localhost:4173
 // Test Postman: localhost:8080/api/v1/{path}
+
+//Nếu muốn tăng số lượng turns
+docker exec -it mysql mysql -u root -p
+/// Nhập password: root
+USE guess_db;
+update users set turns = 10000 where username = '<your username>';
+
 ```
 
 * Hệ thống FE đã xử lý duy trì phiên đăng nhập cho user.
