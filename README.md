@@ -51,7 +51,11 @@ public class RandomGuess {
 git clone https://github.com/NguyenTHanhAn853202/guess-test.git
 cd guess-test
 
-docker componse up -build
+cp .env.example .env
+
+docker compose up --build
+
+// new tab
 docker exec -it mysql mysql -u root -p
 /// Nhập password
 CREATE DATABASE IF NOT EXISTS guess_db;
@@ -69,6 +73,8 @@ CREATE TABLE users (
 
 CREATE INDEX idx_score_desc ON users (score DESC);
 CREATE INDEX idx_username ON users (username);
+
+exit
 
 docker restart guess-be
 // Truy cập localhost:4173
