@@ -48,7 +48,7 @@ public class RandomGuess {
 
 ## Cách chạy dự án
 ```
-git cline https://github.com/NguyenTHanhAn853202/guess-test.git
+git clone https://github.com/NguyenTHanhAn853202/guess-test.git
 cd guess-test
 
 docker componse up -build
